@@ -17,7 +17,9 @@ class BookController extends Controller
 
      public function index()
     {
-        return Book::all();
+        // return Book::all()->toJson(JSON_PRETTY_PRINT);
+        $books = Book::all();
+        return response($books, 200);
     }
 
     /**

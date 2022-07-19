@@ -30,3 +30,5 @@ Route::resource('posts', PostController::class)->only([
  Route::resource('books',BookController::class)->only([
     'destroy', 'show', 'store', 'update','index'
  ]);
+
+ 
