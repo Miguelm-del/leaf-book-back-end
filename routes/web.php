@@ -23,6 +23,6 @@ Route::get('/post/{slug}', [PostController::class, 'show']);
 Route::get('/postall', [PostController::class, 'index']);
 
 
-Route::get('/book',[BookController::class,'index']);
+Route::get('/books',[BookController::class,'index']);
 
-
+Route::get('books/search',[BookController::class,'search']);

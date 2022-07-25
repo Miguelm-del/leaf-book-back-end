@@ -31,4 +31,5 @@ Route::resource('posts', PostController::class)->only([
     'destroy', 'show', 'store', 'update','index'
  ]);
 
- 
+
+ Route::get('book/search',[BookController::class,'search']);

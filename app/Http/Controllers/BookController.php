@@ -94,4 +94,19 @@ class BookController extends Controller
 
         return response()->json(["result" => "ok"], 200);
     }
+
+    public function search(Request $request)
+    {
+        $query = Book::query();
+
+        if ($s = $request->input('s')) {
+            $query->where('titulo', 'regexp', "/.*$s/i")
+            ->orWhere('autor','regexp',"/.*$s/i");
+
+        }
+
+        return $query->get();
+
+
+    }
 }
