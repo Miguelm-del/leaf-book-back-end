@@ -99,7 +99,7 @@ class BookController extends Controller
     {
         $query = Book::query();
 
-        if ($s = $request->input('s')) {
+        if ($s = $request->input('s') && !empty($s)) {
             $query->where('titulo', 'regexp', "/.*$s/i")
             ->orWhere('autor','regexp',"/.*$s/i");
 
