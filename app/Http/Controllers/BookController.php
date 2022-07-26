@@ -107,5 +107,6 @@ class BookController extends Controller
         } else {
             $array = [];
             return $array;
+        }
     }
 }
