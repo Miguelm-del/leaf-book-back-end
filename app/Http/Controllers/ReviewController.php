@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Review;
 use Illuminate\Http\Request;
 
+
 class ReviewController extends Controller
 {
     /**
@@ -14,7 +15,12 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        //
+        $reviews = Review::all();
+        return response($reviews, 200);
+
+
+        // $comments = Comment::all();
+        // return response($comments, 200);
     }
 
     /**
@@ -35,7 +41,8 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Review::create($request->all());
+        return response()->json(["result" => "ok"], 201);
     }
 
     /**

@@ -14,7 +14,8 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        $comments = Comment::all();
+        return response($comments, 200);
     }
 
     /**
@@ -35,7 +36,9 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Comment::create($request->all());
+        return response()->json(["result" => "ok"], 201);
+
     }
 
     /**

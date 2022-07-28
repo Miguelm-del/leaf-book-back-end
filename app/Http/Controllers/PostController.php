@@ -9,7 +9,8 @@ class PostController extends Controller
 {
     public function index()
     {
-        return Post::all();
+        $posts = Post::all();
+        return response($posts, 200);
     }
 
     public function show($slug)
@@ -21,14 +22,7 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        $post = new Post;
-
-        $post->title = $request->title;
-        $post->body = $request->body;
-        $post->slug = $request->slug;
-
-        $post->save();
-
+        Post::create($request->all());
         return response()->json(["result" => "ok"], 201);
     }
 
