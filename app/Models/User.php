@@ -9,8 +9,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Jenssegers\Mongodb\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Jenssegers\Mongodb\Eloquent\SoftDeletes;
+// use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 use Laravel\Sanctum\HasApiTokens;
 
+// class User extends Eloquent implements Authenticatable
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
