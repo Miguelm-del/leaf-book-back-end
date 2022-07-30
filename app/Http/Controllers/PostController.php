@@ -13,11 +13,9 @@ class PostController extends Controller
         return response($posts, 200);
     }
 
-    public function show($slug)
+    public function show($id)
     {
-        return view('post', [
-            'post' => Post::where('slug', '=', $slug)->first()
-        ]);
+        return Post::findOrFail($id);
     }
 
     public function store(Request $request)

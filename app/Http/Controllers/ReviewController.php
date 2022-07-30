@@ -60,9 +60,9 @@ class ReviewController extends Controller
      * @param  \App\Models\Review  $review
      * @return \Illuminate\Http\Response
      */
-    public function show(Review $review)
+    public function show($id)
     {
-        //
+        return Review::findOrFail($id);
     }
 
     /**
@@ -83,9 +83,12 @@ class ReviewController extends Controller
      * @param  \App\Models\Review  $review
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Review $review)
+    public function update(Request $request, $id)
     {
-        //
+        $review = Review::findOrFail($id);
+        $review->update($request->all());
+
+        return response()->json(["result" => "ok"], 201);
     }
 
     /**
@@ -94,8 +97,11 @@ class ReviewController extends Controller
      * @param  \App\Models\Review  $review
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Review $review)
+    public function destroy($id)
     {
-        //
+        $review = Review::findOrFail($id);
+        $review->delete();
+
+        return response()->json(["result" => "ok"], 200);
     }
 }

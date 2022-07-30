@@ -46,9 +46,9 @@ class SynopsisController extends Controller
      * @param  \App\Models\Synopsis  $synopsis
      * @return \Illuminate\Http\Response
      */
-    public function show(Synopsis $synopsis)
+    public function show($id)
     {
-        //
+        return Synopsis::findOrFail($id);
     }
 
     /**
@@ -69,9 +69,12 @@ class SynopsisController extends Controller
      * @param  \App\Models\Synopsis  $synopsis
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Synopsis $synopsis)
+    public function update(Request $request, $id)
     {
-        //
+        $synopsis = Synopsis::findOrFail($id);
+        $synopsis->update($request->all());
+
+        return response()->json(["result" => "ok"], 201);
     }
 
     /**
@@ -80,8 +83,12 @@ class SynopsisController extends Controller
      * @param  \App\Models\Synopsis  $synopsis
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Synopsis $synopsis)
+    public function destroy($id)
     {
-        //
+        $synopsis = Synopsis::findOrFail($id);
+        $synopsis->delete();
+
+        return response()->json(["result" => "ok"], 200);
     }
+
 }

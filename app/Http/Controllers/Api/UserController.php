@@ -78,4 +78,12 @@ class UserController extends Controller
         }
 
     }
+
+    public function showPosts($id) {
+        $user = User::findOrFail($id);
+
+        $posts = $user->posts()->get();
+        return response()->json($posts, status:200);
+    }
+
 }
