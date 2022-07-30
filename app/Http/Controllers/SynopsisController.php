@@ -1,23 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Book as Book;
+
+use App\Models\Synopsis;
 use Illuminate\Http\Request;
 
-
-class BookController extends Controller
+class SynopsisController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-
-     public function index()
+    public function index()
     {
-        $books = Book::all();
-        return response($books, 200);
+        $synopses = Synopsis::all();
+        return response($synopses, 200);
     }
 
     /**
@@ -38,28 +36,28 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        Book::create($request->all());
+        Synopsis::create($request->all());
         return response()->json(["result" => "ok"], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Synopsis  $synopsis
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Synopsis $synopsis)
     {
-        return Book::findOrFail($id);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Synopsis  $synopsis
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Synopsis $synopsis)
     {
         //
     }
@@ -68,43 +66,22 @@ class BookController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Synopsis  $synopsis
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Synopsis $synopsis)
     {
-        $book = Book::findOrFail($id);
-        $book->update($request->all());
-
-        return response()->json(["result" => "ok"], 201);
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Synopsis  $synopsis
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Synopsis $synopsis)
     {
-        $book = Book::findOrFail($id);
-        $book->delete();
-
-        return response()->json(["result" => "ok"], 200);
-    }
-
-    public function search(Request $request)
-    {
-        $query = Book::query();
-
-        if ($s = $request->input('s')) {
-            $query->where('titulo', 'regexp', "/.*$s/i")
-            ->orWhere('autor','regexp',"/.*$s/i");
-            return $query->get();
-
-        } else {
-            return $nothing = [];
-        }
-
+        //
     }
 }

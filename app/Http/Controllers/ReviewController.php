@@ -41,6 +41,15 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'user_id' => 'required',
+            'name' => 'required',
+            'title_book' => 'required',
+            'writer' => 'required',
+            'review' => 'required',
+            'available' => 'required'
+        ]);
+
         Review::create($request->all());
         return response()->json(["result" => "ok"], 201);
     }

@@ -19,10 +19,10 @@ Route::get('/', function () {
 });
 
 
-Route::get('/post/{slug}', [PostController::class, 'show']);
-Route::get('/postall', [PostController::class, 'index']);
-
 
 Route::get('/books',[BookController::class,'index']);
 
 Route::get('books/search',[BookController::class,'search']);
+
+
+Route::get('users', [UserController::class,'index']);
