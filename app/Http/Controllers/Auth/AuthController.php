@@ -10,20 +10,33 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
+    protected $username;
+
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login','register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->username = 'username';
+    }
+
+    /**
+     * Get username property.
+     *
+     * @return string
+     */
+    public function username()
+    {
+        return $this->username;
     }
 
     public function login(Request $request)
     {
         $request->validate([
             //'email' => 'required|string|email',
-            'name' => 'required|string|name',
+            'username' => 'required|string',
             'password' => 'required|string',
         ]);
-      //$credentials = $request->only('email', 'password');
-        $credentials = $request->only('name', 'password');
+        //$credentials = $request->only('username', 'password');
+        $credentials = $request->only('username', 'password');
 
         $token = Auth::attempt($credentials);
         if (!$token) {
@@ -35,25 +48,27 @@ class AuthController extends Controller
 
         $user = Auth::user();
         return response()->json([
-                'status' => 'success',
-                'user' => $user,
-                'authorisation' => [
-                    'token' => $token,
-                    'type' => 'bearer',
-                ]
-            ]);
-
+            'status' => 'success',
+            'user' => $user,
+            'authorisation' => [
+                'token' => $token,
+                'type' => 'bearer',
+            ]
+        ]);
     }
 
-    public function register(Request $request){
+    public function register(Request $request)
+    {
         $request->validate([
-            'name' => 'required|string|max:255|unique:users',
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:25|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
         ]);
 
         $user = User::create([
             'name' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
@@ -90,6 +105,4 @@ class AuthController extends Controller
             ]
         ]);
     }
-
 }
-
