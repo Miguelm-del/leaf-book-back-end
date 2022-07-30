@@ -39,7 +39,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        return User::findOrFail($id);
     }
 
     /**
@@ -66,14 +66,16 @@ class UserController extends Controller
     }
 
     //Teste de relacionamento
-    public function showReviews() {
-        $users = User::all();
-        foreach($users->reviews as $review ) {
-            dd($review);
+    public function showReviews($id) {
+        $user = User::findOrFail($id);
+
+        $reviews = $user->reviews()->get();
+        if ($reviews) {
+            return response()->json($reviews, 200);
         }
-//        $review = Review::first();
-//        $user = $review->user;
-//
-//        return response()->json($user);
+        else {
+         echo "<h1>Sem resenhas</h1>";
+        }
+
     }
 }

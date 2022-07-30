@@ -30,6 +30,8 @@ use App\Http\Controllers\ReviewController;
 //----------------------About Users
 
 Route::get('users', [UserController::class,'index']);
+Route::get('users/{id}', [UserController::class,'show']);
+Route::get('users/reviews/{id}', [UserController::class,'showReviews']);
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login');
