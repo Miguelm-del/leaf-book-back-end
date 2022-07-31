@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\BookController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
@@ -14,15 +15,10 @@ use App\Http\Controllers\PostController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
+Route::get('/', function () {return view('welcome');});
 
 Route::get('/books',[BookController::class,'index']);
 
 Route::get('books/search',[BookController::class,'search']);
-
 
 Route::get('users', [UserController::class,'index']);

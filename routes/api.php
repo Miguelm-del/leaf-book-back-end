@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\SynopsisController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,11 +34,26 @@ Route::get('users', [UserController::class,'index']);
 Route::get('users/{id}', [UserController::class,'show']);
 Route::get('users/reviews/{id}', [UserController::class,'showReviews']);
 
-Route::controller(AuthController::class)->group(function () {
-    Route::post('login', 'login');
-    Route::post('register', 'register');
-    Route::post('logout', 'logout');
-    Route::post('refresh', 'refresh');
+
+// Route::group([
+
+//     'middleware' => 'api',
+//     'prefix' => 'auth'
+
+// ], function ($router) {
+
+//     Route::post('login', [AuthController::class,'login']);
+//     Route::post('logout', [AuthController::class,'logout']);
+//     Route::post('refresh', [AuthController::class,'refresh']);
+//     Route::post('me', [AuthController::class,'me']);
+//     Route::post('register', [AuthController::class,'register']);
+// });
+Route::post('auth/login', [AuthController::class,'login']);
+Route::post('auth/register', [AuthController::class,'register']);
+
+Route::group(['middleware' => ['apiJwt']], function(){
+    Route::post('auth/me',[AuthController::class,'me']);
+    Route::post('auth/logout', [AuthController::class,'logout']);
 
 });
 

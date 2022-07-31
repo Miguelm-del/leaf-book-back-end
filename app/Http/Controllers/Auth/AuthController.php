@@ -28,41 +28,27 @@ class AuthController extends Controller
         return $this->username;
     }
 
+    /**
+     * Get a JWT via given credentials.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(Request $request)
     {
-        $request->validate([
-            //'email' => 'required|string|email',
-            'username' => 'required|string',
-            'password' => 'required|string',
-        ]);
-        //$credentials = $request->only('username', 'password');
-        $credentials = $request->only('username', 'password');
+        $credentials = $request->only(['username', 'password']);
 
-        $token = Auth::attempt($credentials);
-        if (!$token) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Unauthorized',
-            ], 401);
+        if (!$token = auth('api')->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        $user = Auth::user();
-        return response()->json([
-            'status' => 'success',
-            'user' => $user,
-            'authorisation' => [
-                'token' => $token,
-                'type' => 'bearer',
-            ]
-        ]);
+        return $this->respondWithToken($token);
     }
 
-    public function register(Request $request)
-    {
+    public function register(Request $request){
         $request->validate([
             'name' => 'required|string|max:255',
-            'username' => 'required|string|max:25|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
+            'username' => 'required|string|max:25|unique:users',
             'password' => 'required|string|min:6',
         ]);
 
@@ -105,4 +91,34 @@ class AuthController extends Controller
             ]
         ]);
     }
+
+    /**
+     * Get the authenticated User.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function me()
+    {
+        return response()->json(auth('api')->user());
+    }
+
+    /**
+     * Get the token array structure.
+     *
+     * @param  string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth('api')->factory()->getTTL() * 60
+        ]);
+    }
+
+
+
+
 }

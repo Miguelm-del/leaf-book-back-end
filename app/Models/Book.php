@@ -10,7 +10,7 @@ class Book extends Model
     use HasFactory;
 
     protected $connection = 'mongodb';
-    // protected $collection = 'livros';
+    protected $collection = 'livros';
 
     protected $fillable = [
         'titulo',
