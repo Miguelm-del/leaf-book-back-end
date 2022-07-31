@@ -60,7 +60,8 @@ Route::group(['middleware' => ['apiJwt']], function(){
 
 //Teste Relationship
 
-Route::get('users/review', [UserController::class,'showReviews']);
+Route::get('users/reviews/{id}', [UserController::class,'showReviews']);
+Route::get('users/posts/{id}', [UserController::class,'showPosts']);
 
 
 
