@@ -37,7 +37,6 @@ class PostController extends Controller
         $post = Post::find($postId);
         $post->title = $request->title;
         $post->body = $request->body;
-        $post->slug = $request->slug;
         $post->save();
 
         return response()->json(["result" => "ok"], 201);
