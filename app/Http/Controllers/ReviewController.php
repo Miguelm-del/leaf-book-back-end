@@ -112,6 +112,10 @@ class ReviewController extends Controller
         if ($s = $request->input('s')) {
             $query->where('writer','regexp',"/.*$s/i")
             ->orWhere('title_book','regexp',"/.*$s/i");
+            
+            return $query->get();
+            
+            
 
         } else {
             return response()->json([
