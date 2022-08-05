@@ -91,4 +91,24 @@ class SynopsisController extends Controller
         return response()->json(["result" => "ok"], 200);
     }
 
+
+    public function search(Request $request)
+     {
+        $query = Synopsis::query();
+
+        if ($s = $request->input('s')) {
+            query->where('book','regexp', "/.*$s/i")
+            ->orWhere('author','regexp', "/.*$s/i");
+
+            return $query->get();
+
+        } else {
+           return response()->json([
+                'notice' => 'Não foi possivel realizar a busca'
+            ]);
+        }
+
+
+    }
+
 }
