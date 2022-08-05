@@ -104,4 +104,23 @@ class ReviewController extends Controller
 
         return response()->json(["result" => "ok"], 200);
     }
+
+    public function search(Request $request){
+
+        $query = Review::query();
+
+        if ($s = $request->input('s')) {
+            $query->where('name','regexp',"/.*$s/i")
+            ->orWhere('title_book','regexp',"/.*$s/i")
+            ->orWhere('writer','regexp',"/.*$s/i");
+
+        } else {
+            return response()->json([
+                'notice' => 'Não foi possivel realizar a busca'
+            ]);
+        }
+        
+
+    }
+
 }

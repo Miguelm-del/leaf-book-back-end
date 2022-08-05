@@ -27,7 +27,7 @@ use App\Http\Controllers\SynopsisController;
 // });
 
 
-
+   
 //----------------------About Users
 
 Route::get('users', [UserController::class,'index']);
@@ -58,7 +58,7 @@ Route::group(['middleware' => ['apiJwt']], function(){
 });
 
 
-//Teste Relationship
+//----------------------Teste Relationship
 
 Route::get('users/reviews/{id}', [UserController::class,'showReviews']);
 Route::get('users/posts/{id}', [UserController::class,'showPosts']);
@@ -86,4 +86,10 @@ Route::resource('posts', PostController::class)->only([
      'destroy', 'show', 'store', 'update','index'
  ]);
 
+
+
+ //----------------------Searchs
+
  Route::get('book/search',[BookController::class,'search']);
+ Route::get('review/search',[ReviewController::class,'search']);
+ Route::get('sysnopsis/search',[SynopsisController::class],'search');
