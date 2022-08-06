@@ -97,7 +97,7 @@ class SynopsisController extends Controller
         $query = Synopsis::query();
 
         if ($s = $request->input('s')) {
-            query->where('book','regexp', "/.*$s/i")
+            $query->where('book','regexp', "/.*$s/i")
             ->orWhere('author','regexp', "/.*$s/i");
 
             return $query->get();

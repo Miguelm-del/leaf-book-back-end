@@ -41,4 +41,47 @@ class PostController extends Controller
 
         return response()->json(["result" => "ok"], 201);
     }
+
+
+
+    // public function search(Request $request){
+
+    //     $query = Review::query();
+
+    //     if ($s = $request->input('s')) {
+    //         $query->where('writer','regexp',"/.*$s/i")
+    //         ->orWhere('title_book','regexp',"/.*$s/i");
+
+    //         return $query->get();
+
+
+
+    //     } else {
+    //         return response()->json([
+    //             'notice' => 'Não foi possivel realizar a busca'
+    //         ]);
+    //     }
+
+
+    // }
+
+    public function search(Request $request)
+    {
+
+        $query = Post::query();
+
+        if ($s = $request->input('s')) {
+            $query->where('title','regexp', "/.*$s/i")
+            ->orWhere('content','regexp',"/.*$s/i");
+
+            return $query->get();
+        } else
+        {
+            return response()->json([
+                'notice ' => 'Não foi possivel realizar a busca'
+            ]);
+        }
+
+    }
+
 }
